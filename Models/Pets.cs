@@ -37,7 +37,7 @@ public class Pet
   [JsonConverter(typeof(JsonStringEnumConverter))]
   public PetColor PetColor { get; set; }
 
-  public Owner OwnedBy { get; set; }
+  public PetOwner OwnedBy { get; set; }
   public int OwnedById { get; set; }
 
 }

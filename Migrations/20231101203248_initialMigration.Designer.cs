@@ -11,8 +11,8 @@ using pet_hotel.Models;
 namespace pet_hotel_7._0.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20231101195704_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231101203248_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,26 +23,6 @@ namespace pet_hotel_7._0.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("pet_hotel.Models.Owner", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Owners");
-                });
 
             modelBuilder.Entity("pet_hotel.Models.Pet", b =>
                 {
@@ -72,9 +52,29 @@ namespace pet_hotel_7._0.Migrations
                     b.ToTable("Pets");
                 });
 
+            modelBuilder.Entity("pet_hotel.Models.PetOwner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PetOwners");
+                });
+
             modelBuilder.Entity("pet_hotel.Models.Pet", b =>
                 {
-                    b.HasOne("pet_hotel.Models.Owner", "OwnedBy")
+                    b.HasOne("pet_hotel.Models.PetOwner", "OwnedBy")
                         .WithMany()
                         .HasForeignKey("OwnedById")
                         .OnDelete(DeleteBehavior.Cascade)

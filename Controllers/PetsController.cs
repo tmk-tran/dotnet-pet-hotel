@@ -22,105 +22,105 @@ public class PetsController : ControllerBase
     return Ok(Pets);
   }
 
-  [HttpGet("{BreadId}")]
-  public IActionResult GetBreadById(int BreadId)
-  {
-    Bread Bread = _c.Pets.Include(Bread => Bread.BakedBy).FirstOrDefault(Bread => Bread.Id == BreadId);
+//   [HttpGet("{PetId}")]
+//   public IActionResult GetPetById(int PetId)
+//   {
+//     Pet Pet = _c.Pets.Include(Pet => Pet.OwnedBy).FirstOrDefault(Pet => Pet.Id == PetId);
 
-    if (Bread is null)
-    {
-      return NotFound();
-    }
+//     if (Pet is null)
+//     {
+//       return NotFound();
+//     }
 
-    return Ok(Bread);
-  }
+//     return Ok(Pet);
+//   }
 
-  [HttpPost]
-  public ActionResult AddBread(Bread Bread)
-  {
-    Baker Baker = _c.Bakers.Find(Bread.BakedById); 
+//   [HttpPost]
+//   public ActionResult AddPet(Pet Pet)
+//   {
+//     PetOwner PetOwner = _c.PetOwners.Find(Pet.OwnedById); 
 
-    if (Baker is null)
-    {
-      return NotFound();
-    }
+//     if (PetOwner is null)
+//     {
+//       return NotFound();
+//     }
 
-    _c.Breads.Add(Bread);
-    _c.SaveChanges();
+//     _c.Pets.Add(Pet);
+//     _c.SaveChanges();
 
-    return CreatedAtAction(nameof(GetBreadById), new { Id = Bread.Id }, Bread);
-  }
+//     return CreatedAtAction(nameof(GetPetById), new { Id = Pet.Id }, Pet);
+//   }
 
-  [HttpDelete("{BreadId}")]
-  public IActionResult DeleteBread(int BreadId)
-  {
-    Bread Bread = _c.Breads.Find(BreadId);
+//   [HttpDelete("{PetId}")]
+//   public IActionResult DeletePet(int PetId)
+//   {
+//     Pet Pet = _c.Pets.Find(PetId);
 
-    if (Bread is null)
-    {
-      return NotFound();
-    }
+//     if (Pet is null)
+//     {
+//       return NotFound();
+//     }
 
-    _c.Breads.Remove(Bread);
-    _c.SaveChanges();
+//     _c.Pets.Remove(Pet);
+//     _c.SaveChanges();
 
-    return NoContent();
-  }
+//     return NoContent();
+//   }
 
-  [HttpPut("bake/{BreadId}")]
-  public IActionResult BakeBread(int BreadId)
-  {
-    Bread Bread = _c.Breads.Find(BreadId);
+//   [HttpPut("bake/{PetId}")]
+//   public IActionResult BakeBread(int PetId)
+//   {
+//     Bread Bread = _c.Breads.Find(BreadId);
 
-    if (Bread is null)
-    {
-      return NotFound();
-    }
+//     if (Bread is null)
+//     {
+//       return NotFound();
+//     }
 
-    Bread.Bake();
+//     Bread.Bake();
 
-    _c.Breads.Update(Bread);
-    _c.SaveChanges();
+//     _c.Breads.Update(Bread);
+//     _c.SaveChanges();
 
-    return NoContent();
-  }
+//     return NoContent();
+//   }
+// // I'll start here
+//   [HttpPut("pets/{BreadId}")]
+//   public IActionResult SellBread(int BreadId)
+//   {
+//     Bread Bread = _c.Breads.Find(BreadId);
 
-  [HttpPut("sell/{BreadId}")]
-  public IActionResult SellBread(int BreadId)
-  {
-    Bread Bread = _c.Breads.Find(BreadId);
+//     if (Bread is null)
+//     {
+//       return NotFound();
+//     }
 
-    if (Bread is null)
-    {
-      return NotFound();
-    }
+//     Bread.Sell();
 
-    Bread.Sell();
+//     _c.Breads.Update(Bread);
+//     _c.SaveChanges();
 
-    _c.Breads.Update(Bread);
-    _c.SaveChanges();
+//     return NoContent();
+//   }
 
-    return NoContent();
-  }
+//     [HttpPut("{BreadId}")]
+//   public IActionResult UpdateBread(int BreadId, Bread Bread)
+//   {
+//     if (BreadId != Bread.Id)
+//     {
+//       return BadRequest();
+//     }
 
-    [HttpPut("{BreadId}")]
-  public IActionResult UpdateBread(int BreadId, Bread Bread)
-  {
-    if (BreadId != Bread.Id)
-    {
-      return BadRequest();
-    }
+//     bool ExistingBread = _c.Breads.Any(Bread => Bread.Id == BreadId);
 
-    bool ExistingBread = _c.Breads.Any(Bread => Bread.Id == BreadId);
+//     if (ExistingBread is false)
+//     {
+//       return NotFound();
+//     }
 
-    if (ExistingBread is false)
-    {
-      return NotFound();
-    }
+//     _c.Breads.Update(Bread);
+//     _c.SaveChanges();
 
-    _c.Breads.Update(Bread);
-    _c.SaveChanges();
-
-    return NoContent();
-  }
+//     return NoContent();
+//   }
 }

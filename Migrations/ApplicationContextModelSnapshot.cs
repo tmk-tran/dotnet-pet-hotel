@@ -21,26 +21,6 @@ namespace pet_hotel_7._0.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("pet_hotel.Models.Owner", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Owners");
-                });
-
             modelBuilder.Entity("pet_hotel.Models.Pet", b =>
                 {
                     b.Property<int>("Id")
@@ -69,9 +49,29 @@ namespace pet_hotel_7._0.Migrations
                     b.ToTable("Pets");
                 });
 
+            modelBuilder.Entity("pet_hotel.Models.PetOwner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PetOwners");
+                });
+
             modelBuilder.Entity("pet_hotel.Models.Pet", b =>
                 {
-                    b.HasOne("pet_hotel.Models.Owner", "OwnedBy")
+                    b.HasOne("pet_hotel.Models.PetOwner", "OwnedBy")
                         .WithMany()
                         .HasForeignKey("OwnedById")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -6,13 +6,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace pet_hotel_7._0.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Owners",
+                name: "PetOwners",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -22,7 +22,7 @@ namespace pet_hotel_7._0.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Owners", x => x.Id);
+                    table.PrimaryKey("PK_PetOwners", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -40,9 +40,9 @@ namespace pet_hotel_7._0.Migrations
                 {
                     table.PrimaryKey("PK_Pets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pets_Owners_OwnedById",
+                        name: "FK_Pets_PetOwners_OwnedById",
                         column: x => x.OwnedById,
-                        principalTable: "Owners",
+                        principalTable: "PetOwners",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -60,7 +60,7 @@ namespace pet_hotel_7._0.Migrations
                 name: "Pets");
 
             migrationBuilder.DropTable(
-                name: "Owners");
+                name: "PetOwners");
         }
     }
 }

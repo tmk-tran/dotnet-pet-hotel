@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace pet_hotel.Models;
 
-public class Owner
+public class PetOwner
 {
   public int Id { get; set; }
   [Required]
