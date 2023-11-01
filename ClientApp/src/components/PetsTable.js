@@ -14,7 +14,7 @@ class PetsTable extends Component {
       petColor: "",
       petOwnerId: "",
     },
-  };
+  }; //TODO: look at the pets table
 
   componentDidMount = () => {
     this.fetchData();
