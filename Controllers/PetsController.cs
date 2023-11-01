@@ -22,18 +22,18 @@ public class PetsController : ControllerBase
     return Ok(Pets);
   }
 
-//   [HttpGet("{PetId}")]
-//   public IActionResult GetPetById(int PetId)
-//   {
-//     Pet Pet = _c.Pets.Include(Pet => Pet.OwnedBy).FirstOrDefault(Pet => Pet.Id == PetId);
+  [HttpGet("{PetId}")]
+  public IActionResult GetPetById(int PetId)
+  {
+    Pet Pet = _c.Pets.Include(Pet => Pet.OwnedBy).FirstOrDefault(Pet => Pet.Id == PetId);
 
-//     if (Pet is null)
-//     {
-//       return NotFound();
-//     }
+    if (Pet is null)
+    {
+      return NotFound();
+    }
 
-//     return Ok(Pet);
-//   }
+    return Ok(Pet);
+  }
 
 //   [HttpPost]
 //   public ActionResult AddPet(Pet Pet)

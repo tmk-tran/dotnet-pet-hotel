@@ -32,12 +32,12 @@ public class PetOwnersController : ControllerBase
         }
         return Ok(PetOwner);
     }
-}
 
-// [HttpPost]
-// public ActionResult AddPetOwners(PetOwners PetOwners)
-// {
-//     _c.PetOwnerss.Add(PetOwners);
-//     _c.SaveChanges();
-//     return CreatedAtAction(nameof(GetPetOwnersById), new { Id = PetOwners.Id }, PetOwners);
-// }
+    [HttpPost]
+    public ActionResult AddPetOwner(PetOwner PetOwner)
+    {
+        _c.PetOwners.Add(PetOwner);
+        _c.SaveChanges();
+        return CreatedAtAction(nameof(GetPetOwnerById), new { Id = PetOwner.Id }, PetOwner);
+    }
+}
