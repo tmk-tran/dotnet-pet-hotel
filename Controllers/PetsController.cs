@@ -35,21 +35,21 @@ public class PetsController : ControllerBase
     return Ok(Pet);
   }
 
-//   [HttpPost]
-//   public ActionResult AddPet(Pet Pet)
-//   {
-//     PetOwner PetOwner = _c.PetOwners.Find(Pet.OwnedById); 
+  [HttpPost]
+  public ActionResult AddPet(Pet Pet)
+  {
+    PetOwner PetOwner = _c.PetOwners.Find(Pet.OwnedById); 
 
-//     if (PetOwner is null)
-//     {
-//       return NotFound();
-//     }
+    if (PetOwner is null)
+    {
+      return NotFound();
+    }
 
-//     _c.Pets.Add(Pet);
-//     _c.SaveChanges();
+    _c.Pets.Add(Pet);
+    _c.SaveChanges();
 
-//     return CreatedAtAction(nameof(GetPetById), new { Id = Pet.Id }, Pet);
-//   }
+    return CreatedAtAction(nameof(GetPetById), new { Id = Pet.Id }, Pet);
+  }
 
 //   [HttpDelete("{PetId}")]
 //   public IActionResult DeletePet(int PetId)
