@@ -40,4 +40,21 @@ public class PetOwnersController : ControllerBase
         _c.SaveChanges();
         return CreatedAtAction(nameof(GetPetOwnerById), new { Id = PetOwner.Id }, PetOwner);
     }
+
+    [HttpDelete("{PetOwnerId}")]
+    public ActionResult DeletePetOwner(int PetOwnerId)
+    {
+        PetOwner PetOwner = _c.PetOwners.Find(PetOwnerId);
+        if (PetOwner == null)
+        {
+            return NotFound();
+        }
+        _c.PetOwners.Remove(PetOwner);
+        _c.SaveChanges();
+        return NoContent();
+    }
+
+
+
+
 }
