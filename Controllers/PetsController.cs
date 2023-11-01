@@ -51,21 +51,21 @@ public class PetsController : ControllerBase
     return CreatedAtAction(nameof(GetPetById), new { Id = Pet.Id }, Pet);
   }
 
-//   [HttpDelete("{PetId}")]
-//   public IActionResult DeletePet(int PetId)
-//   {
-//     Pet Pet = _c.Pets.Find(PetId);
+  [HttpDelete("{PetId}")]
+  public IActionResult DeletePet(int PetId)
+  {
+    Pet Pet = _c.Pets.Find(PetId);
 
-//     if (Pet is null)
-//     {
-//       return NotFound();
-//     }
+    if (Pet is null)
+    {
+      return NotFound();
+    }
 
-//     _c.Pets.Remove(Pet);
-//     _c.SaveChanges();
+    _c.Pets.Remove(Pet);
+    _c.SaveChanges();
 
-//     return NoContent();
-//   }
+    return NoContent();
+  }
 
 //   [HttpPut("bake/{PetId}")]
 //   public IActionResult BakeBread(int PetId)
