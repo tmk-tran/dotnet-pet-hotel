@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace pet_hotel.Models;
@@ -40,4 +41,14 @@ public class Pet
   public PetOwner OwnedBy { get; set; }
   public int OwnedById { get; set; }
 
+  public DateTime? CheckedInAt { get; set; }
+  public void CheckIn()
+  {
+    CheckedInAt = DateTime.Now;
+  }
+
+  public void CheckOut()
+  {
+    CheckedInAt = null;
+  }
 }

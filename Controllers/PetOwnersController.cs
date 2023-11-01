@@ -41,6 +41,23 @@ public class PetOwnersController : ControllerBase
         return CreatedAtAction(nameof(GetPetOwnerById), new { Id = PetOwner.Id }, PetOwner);
     }
 
+    [HttpPut("{PetOwnerId}")]
+    public IActionResult UpdatePetOwner(int PetOwnerId, PetOwner PetOwner)
+    {
+        if (PetOwnerId != PetOwner.Id)
+        {
+            return BadRequest();
+        }
+        bool ExistingPetOwner = _c.PetOwners.Any(PetOwner => PetOwner.Id == PetOwnerId);
+        if (ExistingPetOwner is false)
+        {
+            return NotFound();
+        }
+        _c.PetOwners.Update(PetOwner);
+        _c.SaveChanges();
+        return NoContent();
+    }
+
     [HttpDelete("{PetOwnerId}")]
     public ActionResult DeletePetOwner(int PetOwnerId)
     {
@@ -53,8 +70,4 @@ public class PetOwnersController : ControllerBase
         _c.SaveChanges();
         return NoContent();
     }
-
-
-
-
-}
+};

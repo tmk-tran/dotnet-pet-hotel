@@ -12,15 +12,17 @@ class PetsTable extends Component {
       name: "",
       petBreed: "",
       petColor: "",
-      petOwnerId: "",
+      ownedById: "",
     },
   }; //TODO: look at the pets table
-
+  
   componentDidMount = () => {
     this.fetchData();
   };
 
+
   renderTable = () => {
+    console.log(this.props.pets)
     return (
       <div className="table-responsive">
         <table
@@ -34,7 +36,7 @@ class PetsTable extends Component {
               <th>Color</th>
               <th>Checked In</th>
               <th>Pet Owner</th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -51,22 +53,22 @@ class PetsTable extends Component {
                 <td>{pet.petBreed}</td>
                 <td>{pet.petColor}</td>
                 <td>
-                  {pet.checkedInAt !== "0001-01-01T00:00:00"
-                    ? moment.utc(pet.checkedInAt).local().calendar()
+                  {pet.CheckedInAt !== "0001-01-01T00:00:00"
+                    ? moment.utc(pet.CheckedInAt).local().calendar()
                     : "Not Checked In"}
                 </td>
-                <td>{pet.ownedBy.Name}</td>
+                <td>{pet.ownedBy.name}</td>
                 <td>
-                  {pet.checkedInAt !== "0001-01-01T00:00:00" ? (
+                  {pet.CheckedInAt !== "0001-01-01T00:00:00" ? (
                     <button
-                      onClick={() => this.checkOut(pet.id)}
+                      onClick={() => this.CheckOut(pet.id)}
                       className="btn btn-sm btn-info ml-1 mr-1"
                     >
                       check out
                     </button>
                   ) : (
                     <button
-                      onClick={() => this.checkIn(pet.id)}
+                      onClick={() => this.CheckIn(pet.id)}
                       className="btn btn-sm btn-info ml-1 mr-1"
                     >
                       check in
@@ -119,9 +121,9 @@ class PetsTable extends Component {
         // .NET throws a weird validation error for database foreign key
         // violations starting with $. for the field name... weird.
         if (err === "$.petOwnerId") {
-          errors.push(<li>Invalid Pet Owner ID</li>);
+          errors.push(<li key={err}>Invalid Pet Owner ID</li>);
         } else {
-          errors.push(<li>{this.state.errors[err]}</li>);
+          errors.push(<li key={err}>{this.state.errors[err]}</li>);
         }
       }
     }
@@ -161,10 +163,10 @@ class PetsTable extends Component {
           <input
             placeholder={"pet name"}
             className={"form-control col-md-2 mr-2"}
-            value={this.state.newPet.Name}
+            value={this.state.newPet.name}
             onChange={(e) =>
               this.setState({
-                newPet: { ...this.state.newPet, Name: e.target.value },
+                newPet: { ...this.state.newPet, name: e.target.value },
               })
             }
           />
@@ -209,12 +211,12 @@ class PetsTable extends Component {
           </select>
           <select
             className={"form-control col-md-2 mr-2"}
-            value={this.state.newPet.petOwnerId}
+            value={this.state.newPet.ownedById}
             onChange={(e) =>
               this.setState({
                 newPet: {
                   ...this.state.newPet,
-                  petOwnerId: Number(e.target.value),
+                  ownedById: Number(e.target.value),
                 },
               })
             }
