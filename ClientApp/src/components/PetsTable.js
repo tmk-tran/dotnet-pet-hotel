@@ -55,7 +55,7 @@ class PetsTable extends Component {
                     ? moment.utc(pet.checkedInAt).local().calendar()
                     : "Not Checked In"}
                 </td>
-                <td>{pet.petOwner.name}</td>
+                <td>{pet.ownedBy.Name}</td>
                 <td>
                   {pet.checkedInAt !== "0001-01-01T00:00:00" ? (
                     <button
@@ -161,10 +161,10 @@ class PetsTable extends Component {
           <input
             placeholder={"pet name"}
             className={"form-control col-md-2 mr-2"}
-            value={this.state.newPet.name}
+            value={this.state.newPet.Name}
             onChange={(e) =>
               this.setState({
-                newPet: { ...this.state.newPet, name: e.target.value },
+                newPet: { ...this.state.newPet, Name: e.target.value },
               })
             }
           />
