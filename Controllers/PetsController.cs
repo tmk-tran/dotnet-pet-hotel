@@ -44,7 +44,10 @@ public class PetsController : ControllerBase
     {
       return NotFound();
     }
-    Pet.CheckedInAt = DateTime.UtcNow;
+
+    string iso8601Timestamp = Pet.CheckedInAt?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+
+    // Pet.CheckedInAt = DateTime.UtcNow;
 
     _c.Pets.Add(Pet);
     _c.SaveChanges();

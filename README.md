@@ -115,7 +115,7 @@ The Pet Object contains basic information about a pet, including physical proper
 - `string name` (required): The pet name
 - `PetBreed breed` (required): Pet breed, based on the `PetBreed` enum.
 - `PetColor color` (required): Pet color, based on the `PetColor` enum.
-- `DateTime edInAt` (nullable): The time that this pet was checked in. If `null`, the pet has not been checked in yet.
+- `DateTime checkedInAt` (nullable): The time that this pet was checked in. If `null`, the pet has not been checked in yet
 - `int petOwnerid` (required): A foreign key link to the pet owner that owns this pet. Set up the foriegn key link with a `PetOwner petOwner` property on the `Pet` model.
 
 A Pet Object looks like this:
