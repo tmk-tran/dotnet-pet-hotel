@@ -13,7 +13,7 @@ public class PetOwnersController : ControllerBase
     {
         _c = c;
     }
-
+// GET for all Owners
     [HttpGet]
     public ActionResult GetPetOwners()
     {
@@ -21,7 +21,7 @@ public class PetOwnersController : ControllerBase
 
         return Ok(PetOwners);
     }
-
+// GET for a spicific OWNER
     [HttpGet("{PetOwnerId}")]
     public IActionResult GetPetOwnerById(int PetOwnerId)
     {
@@ -32,7 +32,7 @@ public class PetOwnersController : ControllerBase
         }
         return Ok(PetOwner);
     }
-
+// POST for adding new owner
     [HttpPost]
     public ActionResult AddPetOwner(PetOwner PetOwner)
     {
@@ -40,7 +40,7 @@ public class PetOwnersController : ControllerBase
         _c.SaveChanges();
         return CreatedAtAction(nameof(GetPetOwnerById), new { Id = PetOwner.Id }, PetOwner);
     }
-
+// PUT for updating count
     [HttpPut("{PetOwnerId}")]
     public IActionResult UpdatePetOwner(int PetOwnerId, PetOwner PetOwner)
     {
@@ -57,7 +57,24 @@ public class PetOwnersController : ControllerBase
         _c.SaveChanges();
         return NoContent();
     }
-
+// PUT for EDIT OWNER NAME
+// [HttpPut("{PetOwnerId}")]
+//     public IActionResult UpdatePetOwner(int petOwnerId, PetOwner PetOwner)
+//     {
+//         if (PetOwnerId != PetOwner.Id)
+//         {
+//             return BadRequest();
+//         }
+//         bool ExistingPetOwner = _c.PetOwners.Any(PetOwner => PetOwner.Id == PetOwnerId);
+//         if (ExistingPetOwner is false)
+//         {
+//             return NotFound();
+//         }
+//         _c.PetOwners.Update(PetOwner);
+//         _c.SaveChanges();
+//         return NoContent();
+//     }
+// DELETE OWNER
     [HttpDelete("{PetOwnerId}")]
     public ActionResult DeletePetOwner(int PetOwnerId)
     {

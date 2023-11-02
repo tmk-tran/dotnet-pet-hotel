@@ -13,7 +13,7 @@ public class PetsController : ControllerBase
   {
     _c = c;
   }
-
+// GET all 
   [HttpGet]
   public ActionResult GetPets()
   {
@@ -21,7 +21,7 @@ public class PetsController : ControllerBase
 
     return Ok(Pets);
   }
-
+// Get by Pet ID
   [HttpGet("{PetId}")]
   public IActionResult GetPetById(int PetId)
   {
@@ -34,7 +34,7 @@ public class PetsController : ControllerBase
 
     return Ok(Pet);
   }
-
+// Post for new pet
   [HttpPost]
   public ActionResult AddPet(Pet Pet)
   {
@@ -47,9 +47,9 @@ public class PetsController : ControllerBase
 
     // _c.PetOwner.Pets.Add(Pet); 
 
-    string iso8601Timestamp = Pet.CheckedInAt?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+    // string iso8601Timestamp = Pet.CheckedInAt?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
 
-    // Pet.CheckedInAt = DateTime.UtcNow;
+    Pet.CheckedInAt = "0001-01-01T00:00:00";
 
     _c.Pets.Add(Pet);
     _c.SaveChanges();
@@ -57,6 +57,7 @@ public class PetsController : ControllerBase
     return CreatedAtAction(nameof(GetPetById), new { Id = Pet.Id }, Pet);
   }
 
+// DELETE
   [HttpDelete("{PetId}")]
   public IActionResult DeletePet(int PetId)
   {
@@ -70,9 +71,9 @@ public class PetsController : ControllerBase
     _c.Pets.Remove(Pet);
     _c.SaveChanges();
 
-    return NoContent();
+    return Ok();
   }
-
+// PUT for CHECK IN
   [HttpPut("{PetId}/checkin")]
   public IActionResult CheckInPet(int PetId)
   {
@@ -90,7 +91,7 @@ public class PetsController : ControllerBase
 
     return NoContent();
   }
-
+// PUT for CHECK OUT
   [HttpPut("{PetId}/checkout")]
   public IActionResult CheckOutPet(int PetId)
   {
@@ -108,7 +109,7 @@ public class PetsController : ControllerBase
 
     return NoContent();
   }
-
+// PUT  
   [HttpPut("{PetId}")]
   public IActionResult UpdatePet(int PetId, Pet Pet)
   {
@@ -127,6 +128,6 @@ public class PetsController : ControllerBase
     _c.Pets.Update(Pet);
     _c.SaveChanges();
 
-    return NoContent();
+    return Ok();
   }
 }
