@@ -12,7 +12,7 @@ class PetsTable extends Component {
       name: "",
       petBreed: "",
       petColor: "",
-      ownedById: "",
+      petOwnerId: "",
     },
   }; //TODO: look at the pets table
   
@@ -62,7 +62,7 @@ class PetsTable extends Component {
                   {pet.checkedInAt ? (
                     <button
                       onClick={() => this.checkOut(pet.id)}
-                      className="btn btn-sm btn-info ml-1 mr-1"
+                      className="check-put"
                     >
                       check out
                     </button>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using pet_hotel.Models;
@@ -11,9 +12,11 @@ using pet_hotel.Models;
 namespace pet_hotel_7._0.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231102162728_changedForPetCount")]
+    partial class changedForPetCount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,25 +33,25 @@ namespace pet_hotel_7._0.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Breed")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("CheckedInAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Color")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PetOwnerId")
+                    b.Property<int>("OwnedById")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PetBreed")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PetColor")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PetOwnerId");
+                    b.HasIndex("OwnedById");
 
                     b.ToTable("Pets");
                 });
@@ -75,13 +78,13 @@ namespace pet_hotel_7._0.Migrations
 
             modelBuilder.Entity("pet_hotel.Models.Pet", b =>
                 {
-                    b.HasOne("pet_hotel.Models.PetOwner", "PetOwner")
+                    b.HasOne("pet_hotel.Models.PetOwner", "OwnedBy")
                         .WithMany("Pets")
-                        .HasForeignKey("PetOwnerId")
+                        .HasForeignKey("OwnedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PetOwner");
+                    b.Navigation("OwnedBy");
                 });
 
             modelBuilder.Entity("pet_hotel.Models.PetOwner", b =>

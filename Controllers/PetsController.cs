@@ -17,7 +17,7 @@ public class PetsController : ControllerBase
   [HttpGet]
   public ActionResult GetPets()
   {
-    List<Pet> Pets = _c.Pets.Include(pet => pet.OwnedBy).ToList();
+    List<Pet> Pets = _c.Pets.Include(Pet => Pet.PetOwner).ToList();
 
     return Ok(Pets);
   }
@@ -25,7 +25,7 @@ public class PetsController : ControllerBase
   [HttpGet("{PetId}")]
   public IActionResult GetPetById(int PetId)
   {
-    Pet Pet = _c.Pets.Include(Pet => Pet.OwnedBy).FirstOrDefault(Pet => Pet.Id == PetId);
+    Pet Pet = _c.Pets.Include(Pet => Pet.PetOwner).FirstOrDefault(Pet => Pet.Id == PetId);
 
     if (Pet is null)
     {
@@ -38,12 +38,14 @@ public class PetsController : ControllerBase
   [HttpPost]
   public ActionResult AddPet(Pet Pet)
   {
-    PetOwner PetOwner = _c.PetOwners.Find(Pet.OwnedById);
+    PetOwner PetOwner = _c.PetOwners.Find(Pet.PetOwnerId);
 
     if (PetOwner is null)
     {
       return NotFound();
     }
+
+    // _c.PetOwner.Pets.Add(Pet); 
 
     string iso8601Timestamp = Pet.CheckedInAt?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
 

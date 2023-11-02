@@ -33,7 +33,7 @@ class PetOwnersTable extends Component {
 
     if (errors.length > 0) {
       return (
-        <div className={"alert alert-danger"}>
+        <div className="alert alert-danger">
           <p>The following errors prevented a successful save:</p>
           <ul>{errors}</ul>
         </div>
@@ -52,6 +52,7 @@ class PetOwnersTable extends Component {
   renderTable = () => {
     console.log(this.props.petOwners)
     return (
+      <>
       <div className="table-responsive">
         <table
           className="table table-striped table-bordered table-hover"
@@ -92,7 +93,12 @@ class PetOwnersTable extends Component {
             ))}
           </tbody>
         </table>
+        {/* <div style={{ display: "flex", flexDirection: "row" }}>
+          <iframe src="https://giphy.com/embed/kBZBlLVlfECvOQAVno" width="480" height="275" frameBorder="0" className="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dogs-good-job-pups-kBZBlLVlfECvOQAVno"></a></p>
+          <iframe src="https://giphy.com/embed/bSIwCqjd9kTNJ6AAhg" width="480" height="275" frameBorder="0" className="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/Artero-dog-grooming-artero-peluqueria-canina-bSIwCqjd9kTNJ6AAhg">via GIPHY</a></p>
+        </div> */}
       </div>
+      </>
     );
   };
 

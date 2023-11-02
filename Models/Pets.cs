@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+// using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace pet_hotel.Models;
@@ -33,13 +33,12 @@ public class Pet
   public string Name { get; set; }
   [Required]
   [JsonConverter(typeof(JsonStringEnumConverter))]
-  public PetBreed PetBreed { get; set; }
+  public PetBreed Breed { get; set; }
   [Required]
   [JsonConverter(typeof(JsonStringEnumConverter))]
-  public PetColor PetColor { get; set; }
-
-  public PetOwner OwnedBy { get; set; }
-  public int OwnedById { get; set; }
+  public PetColor Color { get; set; }
+  public PetOwner PetOwner { get; set; }
+  public int PetOwnerId { get; set; }
 
   public DateTime? CheckedInAt { get; set; }
   public void CheckIn()

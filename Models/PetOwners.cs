@@ -13,19 +13,20 @@ public class PetOwner
   public string Email { get; set; }
 
 
-  public int PetCount { get; set; }
+  // [JsonIgnore]
+  public ICollection<Pet> Pets { get; set; }
 
-  public void CheckIn()
-  {
-    this.PetCount++;
-  }
 
-  public void CheckOut()
+
+  public int PetCount
   {
-    if (this.PetCount > 0)
+
+    get
     {
-      this.PetCount--;
+      return (this.Pets != null) ? this.Pets.Count : 0;
     }
+
   }
+
 
 }
