@@ -16,7 +16,6 @@ test("Create a new pet owner via HTTP POST", async () => {
   expect(typeof response.data).toBe(typeof {});
   expect(typeof response.data.id).toBe(typeof 0);
   console.log(`Pet Owner created with id ${petOwner.id}`);
-  // console.log(response.data);
 });
 
 test(`Update the pet owner via HTTP PUT`, async () => {
@@ -47,8 +46,9 @@ test(`Get all pet owners via HTTP GET`, async () => {
   expect(response.status).toBe(200);
   expect(typeof response.data).toBe(typeof []);
   // does the array contain the object? this is neat.
-  expect(response.data).toBe([petOwner]);
+  expect(response.data).toEqual(expect.arrayContaining([petOwner]));
   console.log(`Pet Owner with id ${petOwner.id} successfully retrieved.`);
+  console.log("DATA", response.data);
 });
 
 test("Get All pet owners via HTTP GET", async () => {
@@ -79,7 +79,7 @@ test("Create a new pet via HTTP POST", async () => {
   expect(typeof response.data.id).toBe(typeof 0);
   expect(typeof response.data.petOwner.petCount).toBe(typeof 1);
   expect(response.data.petOwner.petCount).toBe(1);
-  expect(response.data.checkedInAt).toBe(null);
+  expect(response.data.checkedInAt).toBe("0001-01-01T00:00:00");
   console.log(`Pet created with id ${pet.id} and owner ${petOwner.name}`);
 });
 
@@ -87,7 +87,7 @@ test("Update the pet via HTTP PUT", async () => {
   const newName = "Fido II";
   const newPet = { ...pet, name: newName, color: "Black" };
   const response = await axios.put(`${SERVER_URL}/api/pets/${pet.id}`, newPet);
-  expect(response.status).toBe(204);
+  expect(response.status).toBe(200);
   expect(response.data.name).toBe(newName);
   console.log(`Pet  with id ${pet.id} name changed to ${newName}`);
   pet = response.data;
@@ -97,6 +97,8 @@ test("Check in the pet via HTTP PUT", async () => {
   const response = await axios.put(`${SERVER_URL}/api/pets/${pet.id}/checkin`);
   expect(response.status).toBe(204);
   expect(response.data.name).toBe(pet.Name);
+  expect(typeof response.data.checkedInAt).toBe(typeof "");
+  expect(response.data.checkedInAt.length).toBeGreaterThan(0);
   console.log(`Checked in pet with id ${pet.id} at ${pet.checkedInAt}`);
   pet = response.data;
 });

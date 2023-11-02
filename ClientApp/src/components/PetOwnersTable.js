@@ -64,7 +64,7 @@ class PetOwnersTable extends Component {
               <th>Owner Name</th>
               <th>Email</th>
               <th>Pets</th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -93,10 +93,14 @@ class PetOwnersTable extends Component {
             ))}
           </tbody>
         </table>
-        {/* <div style={{ display: "flex", flexDirection: "row" }}>
+        <div className="center-content"> 
+        <div style={{ display: "flex", flexDirection: "row" }}>
           <iframe src="https://giphy.com/embed/kBZBlLVlfECvOQAVno" width="480" height="275" frameBorder="0" className="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dogs-good-job-pups-kBZBlLVlfECvOQAVno"></a></p>
-          <iframe src="https://giphy.com/embed/bSIwCqjd9kTNJ6AAhg" width="480" height="275" frameBorder="0" className="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/Artero-dog-grooming-artero-peluqueria-canina-bSIwCqjd9kTNJ6AAhg">via GIPHY</a></p>
-        </div> */}
+         <iframe src="https://giphy.com/embed/bSIwCqjd9kTNJ6AAhg" width="480" height="275" frameBorder="0" className="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/Artero-dog-grooming-artero-peluqueria-canina-bSIwCqjd9kTNJ6AAhg">via GIPHY</a></p>
+          </div> 
+        </div>
+        <br />
+
       </div>
       </>
     );
@@ -114,6 +118,7 @@ class PetOwnersTable extends Component {
     return (
       <>
         <h2 id="tableLabel">Pet Owners</h2>
+        <br />
         {this.renderMessages()}
         <div className="form-group row ml-0">
           <input

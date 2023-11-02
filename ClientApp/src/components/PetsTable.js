@@ -64,21 +64,21 @@ class PetsTable extends Component {
                       onClick={() => this.checkOut(pet.id)}
                       className="btn btn-sm btn-info ml-1 mr-1"
                     >
-                      check out
+                      Check-Out
                     </button>
                   ) : (
                     <button
                       onClick={() => this.checkIn(pet.id)}
                       className="btn btn-sm btn-info ml-1 mr-1"
                     >
-                      check in
+                      Check-In
                     </button>
                   )}
                   <button
                     onClick={() => this.delete(pet.id)}
                     className="btn btn-sm btn-danger"
                   >
-                    del
+                    Delete
                   </button>
                 </td>
               </tr>
@@ -158,6 +158,7 @@ class PetsTable extends Component {
     return (
       <>
         <h2 id="tableLabel">Pets</h2>
+        <br />
         {this.renderMessages()}
         <div className="form-group row ml-0 mr-0">
           <input

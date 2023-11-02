@@ -14,7 +14,7 @@ code {
 .btn-primary {
   color: #fff;
   /* background-color: #1b6ec2; */
-  background-color: purple;
+  background-color: rgb(159, 24, 159);
   /* border-color: #1861ac; */
   border-radius: 10px;
   box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
@@ -22,4 +22,15 @@ code {
 
 .btn-primary:hover {
   transform: scale(1.1);
+}
+#tableLabel{
+  font-weight: bold;
+  text-decoration: underline;
+
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
