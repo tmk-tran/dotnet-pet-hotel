@@ -19,6 +19,7 @@ class PetOwnersTable extends Component {
   };
 
   renderMessages = () => {
+   
     /*
            Look into the local state to see if we have any errors
            that are derived from the backend validation, and display them
@@ -49,6 +50,7 @@ class PetOwnersTable extends Component {
   };
 
   renderTable = () => {
+    console.log(this.props.petOwners)
     return (
       <div className="table-responsive">
         <table

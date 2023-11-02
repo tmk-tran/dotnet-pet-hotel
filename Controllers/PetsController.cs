@@ -38,12 +38,13 @@ public class PetsController : ControllerBase
   [HttpPost]
   public ActionResult AddPet(Pet Pet)
   {
-    PetOwner PetOwner = _c.PetOwners.Find(Pet.OwnedById); 
+    PetOwner PetOwner = _c.PetOwners.Find(Pet.OwnedById);
 
     if (PetOwner is null)
     {
       return NotFound();
     }
+    Pet.CheckedInAt = DateTime.UtcNow;
 
     _c.Pets.Add(Pet);
     _c.SaveChanges();
@@ -67,60 +68,60 @@ public class PetsController : ControllerBase
     return NoContent();
   }
 
-//   [HttpPut("bake/{PetId}")]
-//   public IActionResult BakeBread(int PetId)
-//   {
-//     Bread Bread = _c.Breads.Find(BreadId);
+  [HttpPut("{PetId}/checkin")]
+  public IActionResult CheckInPet(int PetId)
+  {
+    Pet Pet = _c.Pets.Find(PetId);
 
-//     if (Bread is null)
-//     {
-//       return NotFound();
-//     }
+    if (Pet is null)
+    {
+      return NotFound();
+    }
 
-//     Bread.Bake();
+    Pet.CheckIn();
 
-//     _c.Breads.Update(Bread);
-//     _c.SaveChanges();
+    _c.Pets.Update(Pet);
+    _c.SaveChanges();
 
-//     return NoContent();
-//   }
-// // I'll start here
-//   [HttpPut("pets/{BreadId}")]
-//   public IActionResult SellBread(int BreadId)
-//   {
-//     Bread Bread = _c.Breads.Find(BreadId);
+    return NoContent();
+  }
 
-//     if (Bread is null)
-//     {
-//       return NotFound();
-//     }
+  [HttpPut("{PetId}/checkout")]
+  public IActionResult CheckOutPet(int PetId)
+  {
+    Pet Pet = _c.Pets.Find(PetId);
 
-//     Bread.Sell();
+    if (Pet is null)
+    {
+      return NotFound();
+    }
 
-//     _c.Breads.Update(Bread);
-//     _c.SaveChanges();
+    Pet.CheckOut();
 
-//     return NoContent();
-//   }
+    _c.Pets.Update(Pet);
+    _c.SaveChanges();
 
-//     [HttpPut("{BreadId}")]
-//   public IActionResult UpdateBread(int BreadId, Bread Bread)
-//   {
-//     if (BreadId != Bread.Id)
-//     {
-//       return BadRequest();
-//     }
+    return NoContent();
+  }
 
-//     bool ExistingBread = _c.Breads.Any(Bread => Bread.Id == BreadId);
+  [HttpPut("{PetId}")]
+  public IActionResult UpdatePet(int PetId, Pet Pet)
+  {
+    if (PetId != Pet.Id)
+    {
+      return BadRequest();
+    }
 
-//     if (ExistingBread is false)
-//     {
-//       return NotFound();
-//     }
+    bool ExistingPet = _c.Pets.Any(Pet => Pet.Id == PetId);
 
-//     _c.Breads.Update(Bread);
-//     _c.SaveChanges();
+    if (ExistingPet is false)
+    {
+      return NotFound();
+    }
 
-//     return NoContent();
-//   }
+    _c.Pets.Update(Pet);
+    _c.SaveChanges();
+
+    return NoContent();
+  }
 }

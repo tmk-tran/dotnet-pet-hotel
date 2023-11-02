@@ -44,7 +44,7 @@ public class Pet
   public DateTime? CheckedInAt { get; set; }
   public void CheckIn()
   {
-    CheckedInAt = DateTime.Now;
+    CheckedInAt = DateTime.UtcNow;
   }
 
   public void CheckOut()
