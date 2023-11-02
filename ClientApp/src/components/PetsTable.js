@@ -12,7 +12,7 @@ class PetsTable extends Component {
       name: "",
       petBreed: "",
       petColor: "",
-      petOwnerId: "",
+      petOwnerId: "", //changed this
     },
   }; //TODO: look at the pets table
   
@@ -50,14 +50,14 @@ class PetsTable extends Component {
             {this.props.pets.map((pet) => (
               <tr key={`pet-row-${pet.id}`}>
                 <td>{pet.name}</td>
-                <td>{pet.petBreed}</td>
-                <td>{pet.petColor}</td>
+                <td>{pet.breed}</td>
+                <td>{pet.color}</td>
                 <td>
                   {pet.checkedInAt 
                     ? moment.utc(pet.checkedInAt).local().calendar()
                     : "Not Checked In"}
                 </td>
-                <td>{pet.ownedBy.name}</td>
+                <td>{pet.petOwner.name}</td>
                 <td>
                   {pet.checkedInAt ? (
                     <button
@@ -211,12 +211,12 @@ class PetsTable extends Component {
           </select>
           <select
             className={"form-control col-md-2 mr-2"}
-            value={this.state.newPet.ownedById}
+            value={this.state.newPet.petOwnerId}
             onChange={(e) =>
               this.setState({
                 newPet: {
                   ...this.state.newPet,
-                  ownedById: Number(e.target.value),
+                  petOwnerId: Number(e.target.value),
                 },
               })
             }

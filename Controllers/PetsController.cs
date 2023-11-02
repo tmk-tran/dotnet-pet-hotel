@@ -17,7 +17,7 @@ public class PetsController : ControllerBase
   [HttpGet]
   public ActionResult GetPets()
   {
-    List<Pet> Pets = _c.Pets.Include(Pet => Pet.PetOwner).ToList();
+    List<Pet> Pets = _c.Pets.Include(pet => pet.PetOwner).ToList();
 
     return Ok(Pets);
   }

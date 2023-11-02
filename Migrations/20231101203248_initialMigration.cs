@@ -34,23 +34,23 @@ namespace pet_hotel_7._0.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     PetBreed = table.Column<int>(type: "integer", nullable: false),
                     PetColor = table.Column<int>(type: "integer", nullable: false),
-                    OwnedById = table.Column<int>(type: "integer", nullable: false)
+                    PetOwnerId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pets_PetOwners_OwnedById",
-                        column: x => x.OwnedById,
+                        name: "FK_Pets_PetOwners_PetOwnerId",
+                        column: x => x.PetOwnerId,
                         principalTable: "PetOwners",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pets_OwnedById",
+                name: "IX_Pets_PetOwnerId",
                 table: "Pets",
-                column: "OwnedById");
+                column: "PetOwnerId");
         }
 
         /// <inheritdoc />

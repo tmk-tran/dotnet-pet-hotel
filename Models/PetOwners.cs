@@ -13,7 +13,7 @@ public class PetOwner
   public string Email { get; set; }
 
 
-  // [JsonIgnore]
+  [JsonIgnore]
   public ICollection<Pet> Pets { get; set; }
 
 
