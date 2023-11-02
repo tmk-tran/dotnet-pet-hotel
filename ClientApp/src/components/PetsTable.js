@@ -62,7 +62,7 @@ class PetsTable extends Component {
                   {pet.checkedInAt ? (
                     <button
                       onClick={() => this.checkOut(pet.id)}
-                      className="check-put"
+                      className="btn btn-sm btn-info ml-1 mr-1"
                     >
                       check out
                     </button>
