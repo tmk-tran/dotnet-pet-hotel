@@ -4,84 +4,71 @@ using pet_hotel.Models;
 
 namespace pet_hotel.Controllers;
 
-[ApiController]
 [Route("api/[controller]")]
+[ApiController]
 public class PetOwnersController : ControllerBase
 {
-  private readonly ApplicationContext _c;
-  public PetOwnersController(ApplicationContext c)
-  {
-    _c = c;
-  }
-
-  [HttpGet]
-  public ActionResult GetPetOwners()
-  {
-    List<PetOwner> PetOwners = _c.PetOwners.Include(p => p.Pets).ToList();
-
-    return Ok(PetOwners);
-  }
-
-  [HttpGet("{id}")]
-  public IActionResult GetPetOwnerById(int id)
-  {
-    PetOwner PetOwner = _c.PetOwners.Find(id);
-
-    if (PetOwner is null)
+    private readonly ApplicationContext _c;
+    public PetOwnersController(ApplicationContext c)
     {
-      return NotFound();
+        _c = c;
+    }
+// GET for all Owners
+    [HttpGet]
+    public ActionResult GetPetOwners()
+    {
+        List<PetOwner> PetOwners = _c.PetOwners.Include(PetOwner => PetOwner.Pets).ToList();
+
+        return Ok(PetOwners);
+    }
+// GET for a spicific OWNER
+    [HttpGet("{PetOwnerId}")]
+    public IActionResult GetPetOwnerById(int PetOwnerId)
+    {
+        PetOwner PetOwner = _c.PetOwners.Find(PetOwnerId);
+        if (PetOwner == null)
+        {
+            return NotFound();
+        }
+        return Ok(PetOwner);
+    }
+// POST for adding new owner
+    [HttpPost]
+    public ActionResult AddPetOwner(PetOwner PetOwner)
+    {
+        _c.PetOwners.Add(PetOwner);
+        _c.SaveChanges();
+        return CreatedAtAction(nameof(GetPetOwnerById), new { Id = PetOwner.Id }, PetOwner);
+    }
+// PUT for updating count
+    [HttpPut("{PetOwnerId}")]
+    public IActionResult UpdatePetOwner(int PetOwnerId, PetOwner PetOwner)
+    {
+        if (PetOwnerId != PetOwner.Id)
+        {
+            return BadRequest();
+        }
+        bool ExistingPetOwner = _c.PetOwners.Any(PetOwner => PetOwner.Id == PetOwnerId);
+        if (ExistingPetOwner is false)
+        {
+            return NotFound();
+        }
+        _c.PetOwners.Update(PetOwner);
+        _c.SaveChanges();
+        return NoContent();
     }
 
-    return Ok(PetOwner);
-  }
-
-  [HttpPost]
-  public ActionResult AddPetOwner(PetOwner petOwner)
-  {
-    _c.PetOwners.Add(petOwner);
-    _c.SaveChanges();
-
-    PetOwner CreatedPetOwner = _c.PetOwners.OrderByDescending(p => p.Id).Include(p => p.Pets).FirstOrDefault();
-
-    return CreatedAtAction(nameof(GetPetOwnerById), new { Id = petOwner.Id }, CreatedPetOwner);
-  }
-
-  [HttpPut("{id}")]
-  public IActionResult UpdatePetOwner(PetOwner petOwner, int id)
-  {
-    if (petOwner.Id != id)
+// DELETE OWNER
+    [HttpDelete("{PetOwnerId}")]
+    public ActionResult DeletePetOwner(int PetOwnerId)
     {
-      return BadRequest();
+        PetOwner PetOwner = _c.PetOwners.Find(PetOwnerId);
+        if (PetOwner == null)
+        {
+            return NotFound();
+        }
+        _c.PetOwners.Remove(PetOwner);
+        _c.SaveChanges();
+        return NoContent();
     }
-
-    bool ExistingPetOwner = _c.PetOwners.Any(p => p.Id == id);
-
-    if (ExistingPetOwner is false)
-    {
-      return NotFound();
-    }
-
-    _c.PetOwners.Update(petOwner);
-    _c.SaveChanges();
-
-    PetOwner UpdatedPetOwner = _c.PetOwners.Find(id);
-
-    return Ok(UpdatedPetOwner);
-  }
-
-  [HttpDelete("{id}")]
-  public IActionResult DeletePetOwner(int id)
-  {
-    PetOwner PetOwner = _c.PetOwners.Find(id);
-
-    if (PetOwner is null)
-    {
-      return NotFound();
-    }
-
-    _c.PetOwners.Remove(PetOwner);
-    _c.SaveChanges();
-
-    return NoContent();
-  }
-}
+};

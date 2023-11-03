@@ -90,6 +90,7 @@ class PetsTable extends Component {
   addPet = async () => {
     try {
       await axios.post("api/pets/", this.state.newPet);
+      this.setState({ newPet: { ...this.state.newPet, name: "", petBreed: "", petColor: "", petOwnerId: '' } });
       this.fetchData();
       this.setState({
         errors: [],

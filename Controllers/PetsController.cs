@@ -42,7 +42,6 @@ public class PetsController : ControllerBase
     _c.SaveChanges();
 
     Pet CreatedPet = _c.Pets.OrderByDescending(p => p.Id).Include(p => p.PetOwner).FirstOrDefault();
-
     return CreatedAtAction(nameof(GetPetById), new { Id = pet.Id }, CreatedPet);
   }
 

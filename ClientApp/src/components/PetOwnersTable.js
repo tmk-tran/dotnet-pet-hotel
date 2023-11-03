@@ -9,7 +9,7 @@ class PetOwnersTable extends Component {
     loading: true,
     newPetOwner: {
       name: "",
-      email: "",
+      emailAddress: "",
     },
   };
  // TODO: look at the owners Table
@@ -172,7 +172,7 @@ class PetOwnersTable extends Component {
     try {
       console.log(this.state.newPetOwner);
       await axios.post("api/petOwners", this.state.newPetOwner);
-      this.setState({ newPetOwner: { ...this.state.newPetOwner, name: "" } });
+      this.setState({ newPetOwner: { ...this.state.newPetOwner, name: "", email: "" } });
       this.props.fetchPetOwners();
       this.setState({
         errors: [],
