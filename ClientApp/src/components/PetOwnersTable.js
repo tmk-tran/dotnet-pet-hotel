@@ -9,7 +9,7 @@ class PetOwnersTable extends Component {
     loading: true,
     newPetOwner: {
       name: "",
-      emailAddress: "",
+      email: "",
     },
   };
  // TODO: look at the owners Table
@@ -79,7 +79,7 @@ class PetOwnersTable extends Component {
               <tr key={`petOwner-row-${petOwner.id}`}>
                 <td>{petOwner.id}</td>
                 <td>{petOwner.name}</td>
-                <td>{petOwner.emailAddress}</td>
+                <td>{petOwner.email}</td>
                 <td>{petOwner.petCount}</td>
                 <td>
                   <button
@@ -136,12 +136,12 @@ class PetOwnersTable extends Component {
           />
           <input
             placeholder="Email Address"
-            value={this.state.newPetOwner.emailAddress}
+            value={this.state.newPetOwner.email}
             onChange={(event) =>
               this.setState({
                 newPetOwner: {
                   ...this.state.newPetOwner,
-                  emailAddress: event.target.value,
+                  email: event.target.value,
                 },
               })
             }

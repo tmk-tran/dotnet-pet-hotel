@@ -12,8 +12,8 @@ using pet_hotel.Models;
 namespace pet_hotel_7._0.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20231102182549_changedForPets")]
-    partial class changedForPets
+    [Migration("20231103184600_changedPetController")]
+    partial class changedPetController
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,18 +33,18 @@ namespace pet_hotel_7._0.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Breed")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("CheckedInAt")
+                    b.Property<DateTime>("CheckedInAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Color")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("PetBreed")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PetColor")
+                        .HasColumnType("integer");
 
                     b.Property<int>("PetOwnerId")
                         .HasColumnType("integer");
@@ -65,6 +65,7 @@ namespace pet_hotel_7._0.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
