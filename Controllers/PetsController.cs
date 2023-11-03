@@ -13,19 +13,19 @@ public class PetsController : ControllerBase
   {
     _c = c;
   }
-// GET all 
+
   [HttpGet]
   public ActionResult GetPets()
   {
-    List<Pet> Pets = _c.Pets.Include(pet => pet.PetOwner).ToList();
+    List<Pet> Pets = _c.Pets.Include(p => p.PetOwner).ToList();
 
     return Ok(Pets);
   }
-// Get by Pet ID
-  [HttpGet("{PetId}")]
-  public IActionResult GetPetById(int PetId)
+
+  [HttpGet("{id}")]
+  public IActionResult GetPetById(int id)
   {
-    Pet Pet = _c.Pets.Include(Pet => Pet.PetOwner).FirstOrDefault(Pet => Pet.Id == PetId);
+    Pet Pet = _c.Pets.Include(p => p.PetOwner).SingleOrDefault(p => p.Id == id);
 
     if (Pet is null)
     {
@@ -34,34 +34,81 @@ public class PetsController : ControllerBase
 
     return Ok(Pet);
   }
-// Post for new pet
-  [HttpPost]
-  public ActionResult AddPet(Pet Pet)
-  {
-    PetOwner PetOwner = _c.PetOwners.Find(Pet.PetOwnerId);
 
-    if (PetOwner is null)
+  [HttpPost]
+  public ActionResult AddPet(Pet pet)
+  {
+    _c.Pets.Add(pet);
+    _c.SaveChanges();
+
+    Pet CreatedPet = _c.Pets.OrderByDescending(p => p.Id).Include(p => p.PetOwner).FirstOrDefault();
+    CreatedPet.CheckedInAt = DateTime.MinValue;
+    return CreatedAtAction(nameof(GetPetById), new { Id = pet.Id }, CreatedPet);
+  }
+
+  [HttpPut("{id}")]
+  public IActionResult UpdatePet(Pet pet, int id)
+  {
+    if (pet.Id != id)
+    {
+      return BadRequest();
+    }
+
+    bool ExistingPet = _c.Pets.Any(p => p.Id == id);
+
+    if (ExistingPet is false)
     {
       return NotFound();
     }
 
-    // _c.PetOwner.Pets.Add(Pet); 
-
-    // string iso8601Timestamp = Pet.CheckedInAt?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
-
-    Pet.CheckedInAt = "0001-01-01T00:00:00";
-
-    _c.Pets.Add(Pet);
+    _c.Pets.Update(pet);
     _c.SaveChanges();
 
-    return CreatedAtAction(nameof(GetPetById), new { Id = Pet.Id }, Pet);
+    Pet Pet = _c.Pets.Find(id);
+
+    return Ok(Pet);
   }
 
-// DELETE
-  [HttpDelete("{PetId}")]
-  public IActionResult DeletePet(int PetId)
+  [HttpPut("{id}/checkin")]
+  public IActionResult CheckInPet(int id)
   {
-    Pet Pet = _c.Pets.Find(PetId);
+    Pet Pet = _c.Pets.Find(id);
+
+    if (Pet is null)
+    {
+      return NotFound();
+    }
+
+    Pet.CheckedInAt = DateTime.UtcNow;
+
+    _c.Pets.Update(Pet);
+    _c.SaveChanges();
+
+    return Ok(Pet);
+  }
+
+  [HttpPut("{id}/checkout")]
+  public IActionResult CheckOutPet(int id)
+  {
+    Pet Pet = _c.Pets.Find(id);
+
+    if (Pet is null)
+    {
+      return NotFound();
+    }
+
+    Pet.CheckedInAt = DateTime.Parse("0001-01-01T00:00:00");
+
+    _c.Pets.Update(Pet);
+    _c.SaveChanges();
+
+    return Ok();
+  }
+
+  [HttpDelete("{id}")]
+  public IActionResult DeletePet(int id)
+  {
+    Pet Pet = _c.Pets.Find(id);
 
     if (Pet is null)
     {
@@ -71,63 +118,6 @@ public class PetsController : ControllerBase
     _c.Pets.Remove(Pet);
     _c.SaveChanges();
 
-    return Ok();
-  }
-// PUT for CHECK IN
-  [HttpPut("{PetId}/checkin")]
-  public IActionResult CheckInPet(int PetId)
-  {
-    Pet Pet = _c.Pets.Find(PetId);
-
-    if (Pet is null)
-    {
-      return NotFound();
-    }
-
-    Pet.CheckIn();
-
-    _c.Pets.Update(Pet);
-    _c.SaveChanges();
-
     return NoContent();
-  }
-// PUT for CHECK OUT
-  [HttpPut("{PetId}/checkout")]
-  public IActionResult CheckOutPet(int PetId)
-  {
-    Pet Pet = _c.Pets.Find(PetId);
-
-    if (Pet is null)
-    {
-      return NotFound();
-    }
-
-    Pet.CheckOut();
-
-    _c.Pets.Update(Pet);
-    _c.SaveChanges();
-
-    return NoContent();
-  }
-// PUT  
-  [HttpPut("{PetId}")]
-  public IActionResult UpdatePet(int PetId, Pet Pet)
-  {
-    if (PetId != Pet.Id)
-    {
-      return BadRequest();
-    }
-
-    bool ExistingPet = _c.Pets.Any(Pet => Pet.Id == PetId);
-
-    if (ExistingPet is false)
-    {
-      return NotFound();
-    }
-
-    _c.Pets.Update(Pet);
-    _c.SaveChanges();
-
-    return Ok();
   }
 }
